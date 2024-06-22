@@ -1,7 +1,7 @@
 import React from 'react';
 // import CurrentTemp from './CurrentTemp';
-import CurrentTemp from './CurrentTemp';
-import StoredWaether from './StoredWaether';
+import CurrentTemp from './components/CurrentTemp';
+import StoredWaether from './components/StoredWaether';
 
 function App() {
   return (
