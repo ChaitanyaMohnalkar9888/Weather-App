@@ -1,4 +1,5 @@
 import React from 'react';
+// import CurrentTemp from './CurrentTemp';
 import CurrentTemp from './CurrentTemp';
 import StoredWaether from './StoredWaether';
 
