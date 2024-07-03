@@ -6,13 +6,13 @@ import StoredWaether from './components/StoredWaether';
 function App() {
   return (
     <div className="flex justify-center bg-black min-h-screen">
-      <div className="flex w-full max-w-6xl gap-10">
-        <div className="w-96">
+      <div className="flex w-full justify-center max-w-6xl gap-10">
+        <div className='p-8 w-full h-full rounded-2xl' >
           <CurrentTemp />
         </div>
-        <div className="w-1/2">
+        {/* <div className="w-1/2">
           <StoredWaether />
-        </div>
+        </div> */}
       </div>
     </div>
   );
