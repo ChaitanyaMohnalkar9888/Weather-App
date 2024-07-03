@@ -50,7 +50,7 @@ export default function CurrentTemp() {
     }
   }, []);
 
-  const onAddToFav = (cityToRemove) => {
+  const onAddToFav = () => {
     if (!cities.includes(weatherData.name)) {
       setcities([...cities, weatherData.name]);
       localStorage.setItem('favciti', JSON.stringify([...cities,weatherData.name]));
@@ -66,8 +66,19 @@ export default function CurrentTemp() {
   const removeCityFromFav = (cityToRemove) => {
     const updatedCities = cities.filter(city => city !== cityToRemove);
     setcities(updatedCities);
-    localStorage.setItem('favoriteCities', JSON.stringify(updatedCities));
+    localStorage.setItem('favciti', JSON.stringify([...updatedCities]));
+    setisfav(false);
+    console.log(updatedCities)
   };
+
+  const addOrRemoveCity = () => {
+    if (!isfav) {
+      onAddToFav();
+    } else {
+      removeCityFromFav(weatherData.name);
+    }
+  };
+
 
   return (
     <div className="w-5/6 m-8 h-full bg-slate-900 border p-4 border-sky-400 rounded-2xl">
@@ -121,7 +132,7 @@ export default function CurrentTemp() {
           <div className="flex justify-center">
             {weatherData && (
               <button
-                onClick={onAddToFav}
+                onClick={addOrRemoveCity}
                 type="button"
                 className="m-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
