@@ -4,6 +4,11 @@ const api = {
   base: "https://api.openweathermap.org/data/2.5/weather",
 };
 
+const forcastApi = {
+   key: "887b0b4d1be2392d3a6f93a7d6425adc",
+  base: "https://api.openweathermap.org/data/2.5/weather",
+};
+
 export default function CurrentTemp() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchedCity, setSearchedCity] = useState(null);
@@ -24,12 +29,12 @@ export default function CurrentTemp() {
           }
           setWeatherData(result);
           setSearchedCity(city);
+          fetchWeatherForecast(result.coord.lat, result.coord.lon);
         } else {
           setWeatherData(null);
           setSearchedCity(null);
         }
-        setSearchQuery('')
-        console.log(result)
+        setSearchQuery('');
       })
       .catch((error) => {
         console.error("Error fetching weather data:", error);
@@ -37,6 +42,32 @@ export default function CurrentTemp() {
         setSearchedCity(null);
       });
   };
+  
+
+  const fetchWeatherForecast = (lat, lon) => {
+    const currentDate = Math.floor(Date.now() / 1000);
+    const pastDays = Array.from({ length: 5 }, (_, i) => currentDate - i * 86400);
+  
+    const forecastPromises = pastDays.map((day) => {
+      const url = `${forcastApi.base}?lat=${lat}&lon=${lon}&dt=${day}&units=metric&appid=${forcastApi.key}`;
+      return fetch(url).then((res) => res.json());
+    });
+  
+    Promise.all(forecastPromises)
+      .then((results) => {
+        results.forEach((result, index) => {
+          if (result.cod !== 200) {
+            console.error(`Error fetching weather forecast for day ${index + 1}:`, result.message);
+          } else {
+            console.log(`Weather forecast for day ${index + 1}:`, result);
+          }
+        });
+      })
+      .catch((error) => {
+        console.error("Error fetching weather forecast:", error);
+      });
+  };
+  
 
   const handleSearch = () => {
     fetchWeather(searchQuery);
