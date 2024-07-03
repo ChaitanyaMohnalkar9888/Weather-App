@@ -10,7 +10,7 @@ export default function CurrentTemp() {
   const [weatherData, setWeatherData] = useState(null);
   const [cities, setcities] = useState([]);
   const [isfav, setisfav] = useState(false);
-  // Function to fetch weather data
+
   const fetchWeather = (city) => {
     const url = `${api.base}?q=${city}&units=metric&appid=${api.key}`;
     fetch(url)
@@ -38,7 +38,6 @@ export default function CurrentTemp() {
       });
   };
 
-  // Function to handle search
   const handleSearch = () => {
     fetchWeather(searchQuery);
   };
@@ -66,7 +65,7 @@ export default function CurrentTemp() {
   const removeCityFromFav = (cityToRemove) => {
     const updatedCities = cities.filter(city => city !== cityToRemove);
     setcities(updatedCities);
-    localStorage.setItem('favciti', JSON.stringify([...updatedCities]));
+    localStorage.setItem('favciti', JSON.stringify(updatedCities));
     setisfav(false);
     console.log(updatedCities)
   };
@@ -81,7 +80,7 @@ export default function CurrentTemp() {
 
 
   return (
-    <div className="w-5/6 m-8 h-full bg-slate-900 border p-4 border-sky-400 rounded-2xl">
+    <div className="w-5/6 m- h-full bg-slate-900 border p-4 border-sky-400 rounded-2xl">
       <div className="flex gap-4 p-2">
         <button
           type="button"
@@ -99,37 +98,37 @@ export default function CurrentTemp() {
           placeholder="Search city..."
         />
       </div>
-      <div className="text-white flex w-full justify-center cursor-pointer">
+      <div className="text-white w-full flex grid-cols-4 gap-4 cursor-pointer m-16">
         {cities.map((item) => {
           return (
-            <div onClick={()=>fetchWeather(item)} className=" cursor-pointer flex justify-center items-center w-20 h-6 bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+            <div onClick={()=>fetchWeather(item)} className=" cursor-pointer items-center w-20 h-6 bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
               {item}
             </div>
           );
         })}
       </div>
       <div className="flex-col lg:flex  justify-center items-center">
-        <div className="w-1/2 h-full flex-col p-8">
+        <div className="w-full h-full p-8 grid justify-items-end">
           {searchedCity && weatherData && (
             <>
-              <div className="flex justify-center gap-x-6">
+              <div className="flex justify-end gap-x-6">
                 <p className="text-white text-6xl">{weatherData.main.temp}°</p>
                 <p className="text-white text-4xl">C</p>
               </div>
-              <div className="flex justify-center gap-x-6">
+              <div className="flex justify-end gap-x-6">
                 <p className="text-white text-2xl m-6">
                   {weatherData.weather[0].description}
                 </p>
               </div>
-              <div className="flex justify-center gap-x-6 mb-10">
-                <p className="text-white text-xl">
+              <div className="flex justify-end gap-x-6 mb-10">
+                <p className="text-white text-2xl  m-6">
                   {new Date().toLocaleDateString()}
                 </p>
               </div>
             </>
           )}
 
-          <div className="flex justify-center">
+          <div className="flex justify-end">
             {weatherData && (
               <button
                 onClick={addOrRemoveCity}
