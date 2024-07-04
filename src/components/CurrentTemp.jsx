@@ -3,7 +3,6 @@ const api = {
   key: "887b0b4d1be2392d3a6f93a7d6425adc",
   base: "https://api.openweathermap.org/data/2.5/weather",
 };
-
 const forcastApi = {
    key: "887b0b4d1be2392d3a6f93a7d6425adc",
   base: "https://api.openweathermap.org/data/2.5/weather",
@@ -72,7 +71,7 @@ export default function CurrentTemp() {
   const handleSearch = () => {
     fetchWeather(searchQuery);
   };
-  const fav = [];
+
   useEffect(() => {
     const savedCities = localStorage.getItem('favciti');
     if (savedCities) {
@@ -173,11 +172,11 @@ export default function CurrentTemp() {
         </div>
         <div className="w-1/2"></div>
       </div>
-      {!searchedCity && (
+      {/* {!searchedCity && (
         <div className="flex animate-ping justify-center items-center w-full h-full text-2xl font-extrabold text-white">
           Search Valid City
         </div>
-      )}
+      )} */}
     </div>
   );
 }
